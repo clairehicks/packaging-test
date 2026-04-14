@@ -1,9 +1,13 @@
+import groovy.xml.dom.DOMCategory.attributes
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     java
     application
     id("org.javamodularity.moduleplugin") version "1.8.15"
     id("org.openjfx.javafxplugin") version "0.0.13"
     id("org.beryx.jlink") version "2.25.0"
+    id("com.gradleup.shadow") version "9.0.2"
 }
 
 group = "com.example"
@@ -43,6 +47,18 @@ dependencies {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+tasks{
+    named<ShadowJar>("shadowJar") {
+        archiveBaseName.set("shadow")
+        mergeServiceFiles()
+        manifest {
+            attributes["Main-Class"] = "com.example.packagelearning.Launcher"
+        }
+        archiveFileName.set("HelloApplication.jar")
+    }
+}
+
 
 jlink {
     imageZip.set(layout.buildDirectory.file("/distributions/app-${javafx.platform.classifier}.zip"))
