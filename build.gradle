@@ -62,4 +62,28 @@ jlink {
     launcher {
         name = 'HelloApplication'
     }
+
+    jpackage {
+        installerOptions = [
+                '--description', "a test",
+                '--copyright', 'Test project 2026'
+        ]
+
+        imageOptions += ['--icon', 'src/main/resources/com/example/packagelearning/icon.ico']
+
+        //Windows
+        installerOptions += [
+        '--type', 'msi',
+                '--win-per-user-install', '--win-dir-chooser',
+                '--win-menu', '--win-shortcut'
+        ]
+
+        //Debian
+//        installerOptions += [
+//                '--type', 'deb',
+//                '--linux-menu-group', 'Office',
+//                '--linux-shortcut',
+//                '--linux-deb-maintainer', 'fake'
+//        ]
+    }
 }
